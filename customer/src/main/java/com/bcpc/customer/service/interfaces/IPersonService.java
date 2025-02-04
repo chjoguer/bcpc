@@ -9,8 +9,7 @@ public interface IPersonService {
 
     List<ClientBankDTO> findAll();
     ClientBankDTO findById(String identification);
-    ClientDTO createClient(ClientDTO person);
-    ClientBankDTO createClient2(ClientBankDTO ClientBankDTO);
+    ClientBankDTO createClient(ClientBankDTO person);
     ClientBankDTO updateClient(ClientBankDTO person,String identification);
     ClientBankDTO deleteClient(String identification);
 

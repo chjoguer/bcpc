@@ -35,5 +35,5 @@ public interface MovementRepository  extends JpaRepository<Movement, Long> {
     List<ReportDTO> findMovementByAccountAndDate(@Param("accountNumber") String accountNumber,
                                                  @Param("startDate") LocalDate startDate,
                                                  @Param("endDate") LocalDate endDate);
-    
+
 }

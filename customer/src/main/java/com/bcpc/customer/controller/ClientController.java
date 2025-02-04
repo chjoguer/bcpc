@@ -17,12 +17,12 @@ public class ClientController {
     private ClientServiceImpl clientService;
 
     @PostMapping
-    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO client) {
+    public ResponseEntity<ClientBankDTO> createClient(@RequestBody ClientBankDTO client) {
         return ResponseEntity.ok(this.clientService.createClient(client));
     }
     @PostMapping("/create")
     public ResponseEntity<ClientBankDTO> createClientBank(@RequestBody ClientBankDTO clientDTO) {
-        return ResponseEntity.ok(this.clientService.createClient2(clientDTO));
+        return ResponseEntity.ok(this.clientService.createClient(clientDTO));
     }
 
     @PutMapping("/{identification}")

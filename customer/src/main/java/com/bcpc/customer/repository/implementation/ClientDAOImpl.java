@@ -1,7 +1,6 @@
 package com.bcpc.customer.repository.implementation;
 
 import com.bcpc.customer.domain.Client;
-import com.bcpc.customer.domain.Client2;
 import com.bcpc.customer.repository.dao.IClientDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,20 +19,20 @@ public class ClientDAOImpl implements IClientDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Client2> findClients() {
-        return this.em.createQuery("SELECT c FROM Client2 c", Client2.class).getResultList();
+    public List<Client> findClients() {
+        return this.em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Client2> findClientById(String identification) {
+    public Optional<Client> findClientById(String identification) {
         return this.em.createQuery(
-                        "SELECT c FROM Client2 c WHERE c.identification = :identification", Client2.class)
+                        "SELECT c FROM Client c WHERE c.identification = :identification", Client.class)
                 .setParameter("identification", identification)
                 .getResultStream()
                 .findFirst();
 
-//      return Optional.ofNullable(this.em.find(Client2.class, id));
+//      return Optional.ofNullable(this.em.find(Client.class, id));
     }
 
     @Override
@@ -45,27 +44,20 @@ public class ClientDAOImpl implements IClientDAO {
 
     }
 
-    @Override
-    @Transactional
-    public Client2 createClient2(Client2 client2Entity) {
-        System.out.println("Client2 created"+client2Entity);
-        this.em.persist(client2Entity);
-        this.em.flush();
-        return client2Entity;
-    }
+
 
 
 
     @Override
     @Transactional
-    public Client2 updateClient(Client2 person) {
+    public Client updateClient(Client person) {
         this.em.merge(person);
         return person;
     }
 
     @Override
     @Transactional
-    public Client2 deleteClient(Client2 person) {
+    public Client deleteClient(Client person) {
         this.em.remove(person);
         return person;
     }
