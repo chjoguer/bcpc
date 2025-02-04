@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Account {
     private String numberAccount;
+    private String identification;
     private String typeAccount;
     private Double initialAmount;
     private Integer status;
@@ -40,5 +41,13 @@ public class Account {
 
     public void setTypeAccount(String typeAccount) {
         this.typeAccount = typeAccount;
+    }
+
+    public String getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(String identification) {
+        this.identification = identification;
     }
 }

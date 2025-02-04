@@ -24,19 +24,17 @@ public class CustomerService {
         this.accountClient = accountClient;
     }
 
-    public static String generateSixDigitAccountNumber() {
-        SecureRandom secureRandom = new SecureRandom();
-        int number = 100000 + secureRandom.nextInt(900000); // generates a number between 100000 and 999999
-        return String.valueOf(number);
-    }
+
 
     public Customer createCustomer(Customer customer) {
         Customer createdCustomer = customerClient.createCustomer(customer);
         String accountNumber = generateSixDigitAccountNumber();
+        String defaultAccount = "Ahorro";
 
         Account account = new Account();
         account.setNumberAccount(accountNumber);
-        account.setTypeAccount("Ahorro");
+        account.setIdentification(customer.getIdentification());
+        account.setTypeAccount(defaultAccount);
         account.setInitialAmount(0.0);
         account.setStatus(1);
         accountClient.createAccount(account);
@@ -45,7 +43,19 @@ public class CustomerService {
     }
 
 
+
+
     public List<Customer> getCustomers() {
         return this.customerClient.fetchCustomers();
+    }
+
+    public Customer getCustomersByIdentification(String identification) {
+        return this.customerClient.fetchClientByIdentification(identification);
+    }
+
+    public static String generateSixDigitAccountNumber() {
+        SecureRandom secureRandom = new SecureRandom();
+        int number = 100000 + secureRandom.nextInt(900000);
+        return String.valueOf(number);
     }
 }

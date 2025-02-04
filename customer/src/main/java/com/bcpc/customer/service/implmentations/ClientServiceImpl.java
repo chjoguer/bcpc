@@ -47,7 +47,7 @@ public class ClientServiceImpl implements IPersonService {
             Client2 currentClient = userEntity.get();
             return modelMapper.map(currentClient, ClientBankDTO.class);
         }else{
-            return new ClientBankDTO();
+            return null;
         }
 
     }

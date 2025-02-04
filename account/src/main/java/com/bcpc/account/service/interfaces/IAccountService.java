@@ -9,8 +9,8 @@ public interface IAccountService {
 
     List<AccountDTO> findAll();
     Optional<AccountDTO> findAccountById(String identification);
-    AccountDTO createAccount(AccountDTO person);
-    AccountDTO updateAccount(AccountDTO person,String identification);
+    AccountDTO createAccount(AccountDTO account);
+    AccountDTO updateAccount(AccountDTO account,String identification);
     String deleteAccount(String identification);
 
 }

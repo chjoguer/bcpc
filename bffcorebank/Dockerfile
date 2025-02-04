@@ -19,10 +19,10 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the generated JAR file from the build stage to the runtime stage
-COPY --from=builder /app/target/customer-0.0.1-SNAPSHOT.jar /app/myapp.jar
+COPY --from=builder /app/target/bffcorebank-0.0.1-SNAPSHOT.jar /app/myapp.jar
 
 # Expose the application port
-EXPOSE 9090
+EXPOSE 8080
 
 # Environment variables for database connection
 

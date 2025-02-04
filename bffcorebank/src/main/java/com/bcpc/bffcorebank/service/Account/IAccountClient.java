@@ -3,12 +3,13 @@ package com.bcpc.bffcorebank.service.Account;
 import com.bcpc.bffcorebank.domain.Account;
 import com.bcpc.bffcorebank.domain.Customer;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-@FeignClient(name = "account-service", url = "http://localhost:9095")
+@Service
+@FeignClient(name = "account-service", url = "http://account-ms:9095")
 public interface IAccountClient {
 
     @GetMapping(value = "/bcpc/api/cuentas", consumes = "application/json")

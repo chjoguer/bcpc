@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AccountDTO implements Serializable {
     private String numberAccount;
+    private String identification;
     private String typeAccount;
     private Double initialAmount;
     private Integer status;

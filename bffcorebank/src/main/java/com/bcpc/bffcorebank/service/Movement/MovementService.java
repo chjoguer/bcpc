@@ -8,6 +8,7 @@ import com.bcpc.bffcorebank.service.Customer.ICustomerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,15 @@ public class MovementService {
         this.movementClient = movementClient;
     }
 
+    public List<Movement> getMovements() {
+        return this.movementClient.fetchMovement();
+    }
+    public List<Movement> getMovementsByNumAccount(String numAccount) {
+        return this.movementClient.getMovementsByNumAccount(numAccount);
+    }
+
+
+
     public Movement createMovement(Movement movement) {
         Optional<Account> account = this.accountClient.fetchAccountByNumAccount(movement.getNumberAccount());
 
@@ -32,8 +42,26 @@ public class MovementService {
 
 
             movement.setInitialAmount(initialAmount);
+
+            if(movement.getMovementAmount()>0){
+                System.out.println(movement.getMovementAmount());
+                //Deposito
+                if(movement.getMovementAmount() == 0){
+                    return new Movement();
+                }
+                ac.setInitialAmount(ac.getInitialAmount()+movement.getMovementAmount());
+
+            } else if (movement.getMovementAmount()<0) {
+                //Retiro
+                if(ac.getInitialAmount() == 0 || Math.abs(movement.getMovementAmount()) > ac.getInitialAmount() ){
+                    return new Movement();
+                }
+                ac.setInitialAmount(ac.getInitialAmount()+movement.getMovementAmount());
+
+            }
+
             Movement newMovement = this.movementClient.createMovement(movement);
-            ac.setInitialAmount(ac.getInitialAmount()+newMovement.getMovementAmount());
+
             Account updatedAccount = this.accountClient.updateAccount(ac,ac.getNumberAccount());
             return newMovement;
         }

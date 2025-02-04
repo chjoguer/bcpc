@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/bff/customers")
 public class CustomerController {
 
@@ -26,7 +27,13 @@ public class CustomerController {
     @GetMapping()
     public ResponseEntity<List<Customer>> fetchCustomer() {
         List<Customer> createdCustomer = this.customerService.getCustomers();
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+        return ResponseEntity.status(HttpStatus.OK).body(createdCustomer);
     }
+
+    @GetMapping("/{identification}")
+    public ResponseEntity<Customer> fetchClientByIdentification(@PathVariable("identification") String identification) {
+        return  ResponseEntity.ok(this.customerService.getCustomersByIdentification(identification));
+    }
+
 
 }

@@ -21,8 +21,6 @@ public class Account  {
     private String typeAccount;
     private Double initialAmount;
     private Integer status;
-
-
-
+    private String identification;
 
 }
