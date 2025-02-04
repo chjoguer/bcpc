@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "c96e92af-8723-4734-a591-ab61921b0f7e",
+		"name": "BCPC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9734283"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create Account",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"2344333555225\",\r\n    \"typeAccount\":\"Current\",\r\n    \"identification\":\"23231\",\r\n    \"initialAmount\":300,\r\n    \"status\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9095/bcpc/api/cuentas/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9095",
+							"path": [
+								"bcpc",
+								"api",
+								"cuentas",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upadate Account",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"sdsdss\",\r\n    \"typeAccount\":\"Curressnt\",\r\n    \"initialAmount\":23,\r\n    \"status\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9095/bcpc/api/cuentas/sdsdss",
+							"host": [
+								"localhost"
+							],
+							"port": "9095",
+							"path": [
+								"bcpc",
+								"api",
+								"cuentas",
+								"sdsdss"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account by NumberAccount",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9095/bcpc/api/cuentas/918937",
+							"host": [
+								"localhost"
+							],
+							"port": "9095",
+							"path": [
+								"bcpc",
+								"api",
+								"cuentas",
+								"918937"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Accounts",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9095/bcpc/api/cuentas",
+							"host": [
+								"localhost"
+							],
+							"port": "9095",
+							"path": [
+								"bcpc",
+								"api",
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movement",
+			"item": [
+				{
+					"name": "Create Movement",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"00999\",\r\n    \"movementAt\":\"Current\",\r\n    \"typeMovement\":\"Corriente\",\r\n    \"initialAmount\":23,\r\n    \"movementAmount\":32,\r\n    \"status\":1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9080/bcpc/api/movimiento/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"bcpc",
+								"api",
+								"movimiento",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/bcpc/api/movimiento/683053/report?startDate=2025-02-03&endDate=2025-02-03&",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"bcpc",
+								"api",
+								"movimiento",
+								"683053",
+								"report"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-02-03"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-02-03"
+								},
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upadate Movement",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"sdsdss\",\r\n    \"typeAccount\":\"Curressnt\",\r\n    \"initialAmount\":23,\r\n    \"status\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9080/bcpc/api/movimiento/sdsdss",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"bcpc",
+								"api",
+								"movimiento",
+								"sdsdss"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account by NumberAccount Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9080/bcpc/api/movimiento/0099",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"bcpc",
+								"api",
+								"movimiento",
+								"0099"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BFF",
+			"item": [
+				{
+					"name": "BFF Create Client",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian Garcia\",\r\n    \"gender\": \"M\",\r\n    \"age\": 27,\r\n    \"identification\": \"33222\",\r\n    \"address\": \"AV. El Salvador\",\r\n    \"phone\": \"0995598258\",\r\n    \"password\": \"xxssw22\",\r\n    \"clientReference\": 33,\r\n    \"status\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/customers/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"customers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Fetch Client",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Fetch Cuenta By Num",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/bff/cuenta",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"cuenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Fetch Cuenta Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/cuenta",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"cuenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Create Movement",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"752825\",\r\n    \"movementAt\":\"Current\",\r\n    \"typeMovement\":\"Corriente\",\r\n    \"initialAmount\":999999,\r\n    \"movementAmount\":-30,\r\n    \"status\":1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/movimiento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"movimiento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Fetch Movement",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"00999\",\r\n    \"movementAt\":\"Current\",\r\n    \"typeMovement\":\"Corriente\",\r\n    \"initialAmount\":23,\r\n    \"movementAmount\":32,\r\n    \"status\":1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/movimiento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"movimiento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BFF Fetch Movement By Account",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberAccount\":\"00999\",\r\n    \"movementAt\":\"Current\",\r\n    \"typeMovement\":\"Corriente\",\r\n    \"initialAmount\":23,\r\n    \"movementAmount\":32,\r\n    \"status\":1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bff/movimiento/752825",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bff",
+								"movimiento",
+								"752825"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Fetch Clients",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/bcpc/api/clientes/0958561029",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"bcpc",
+								"api",
+								"clientes",
+								"0958561029"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian Guerrero\",\r\n    \"gender\": \"M\",\r\n    \"age\": 27,\r\n    \"identification\": \"1234556789\",\r\n    \"address\": \"AV. El Salvador UIO\",\r\n    \"phone\": \"0995598258\",\r\n    \"password\": \"Sistemas23198\",\r\n    \"clientReference\": 33,\r\n    \"status\": \"exasdsdsdxxxss\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/bcpc/api/clientes/0958561029",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"bcpc",
+								"api",
+								"clientes",
+								"0958561029"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Client Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/bcpc/api/clientes/0958561029",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"bcpc",
+								"api",
+								"clientes",
+								"0958561029"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Clients By Identification",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/bcpc/api/clientes/0958561029",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"bcpc",
+								"api",
+								"clientes",
+								"0958561029"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

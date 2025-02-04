@@ -9,8 +9,8 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "client2")
-public class Client2 extends Person {
+@Table(name = "client")
+public class Client extends Person {
 //        @Id
 //        @GeneratedValue(strategy = GenerationType.IDENTITY)
 //        private Long id;
