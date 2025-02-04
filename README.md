@@ -37,11 +37,16 @@ docker build . -t customer-image:1.0.0
 docker run -d --name customer-ms --network=bcpc -p 9090:9090 customer-image:1.0.0
 
 Go to bffcorebank Middleware
-docker run -d --name bffcorebank-ms --network=bcpc -p 8080:8080 bffcorebank-image:1.0.0  bffcorebank-ms
+docker run -d --name bffcorebank-ms --network=bcpc -p 8080:8080 bffcorebank-image:1.0.0
 
 Go to bpcp-frontend
 docker build . -t bcpc-image:1.0.0
 docker run -d  --name bcpc-frontend --network=bcpc -p 4200:4200 bcpc-image:1.0.0 
 
 ```
+
+### Arquitectura de Microservicios
+
+![plot](./DiagramaArquitecturaMicroservicios.png)
+
 

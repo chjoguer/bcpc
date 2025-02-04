@@ -60,8 +60,9 @@ public class MovementController {
             }
         }
         return CustomResponse.success(reportData);
-
     }
+
+
 
     @PostMapping("/create")
     public ResponseEntity<MovementDTO> createMovement(@RequestBody MovementDTO movementDTO) {
