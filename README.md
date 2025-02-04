@@ -50,7 +50,12 @@ docker run -d  --name bcpc-frontend --network=bcpc -p 4200:4200 bcpc-image:1.0.0
 ![plot](./DiagramaArquitecturaMicroservicios.png)
 
 ### Collection Postman
-
-### Script DB
-
+```
+1.- BPC.postman_collection.json
+```
+### Script DB and Docker Compose
+```
+Go to database
+docker-compose up --build -d
+```
 

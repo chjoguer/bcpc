@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: my_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: core_bcp
+      POSTGRES_USER: example_user
+      POSTGRES_PASSWORD: example_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bcpc
+
+volumes:
+  postgres_data:
+
+networks:
+  bcpc:
+    external: true  # Use the same 'bcpc' network
