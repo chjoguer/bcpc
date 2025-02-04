@@ -38,12 +38,20 @@
 </div>
   
     <!-- Search Input -->
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="Buscar">
+    <div class="row g-3">
+      <div class="col-6">
+        <label for="numberAccount" class="visually-hidden">Ingrese su consulta</label>
+        <input class="form-control" id="numberAccount"  [(ngModel)]="numberAccount"  placeholder="Ingrese su consulta" />
+      </div>
+  
     </div>
+
+    
+
+    
   
     <!-- Table -->
-    <table class="table table-bordered">
+    <table class="table table-bordered mt-4">
       <thead>
         <tr>
          <th>Fecha</th>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MovimientosApiService } from '../movimientos/services/movimientos-api.service';
-import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { reportDTO } from './dto/reportDTO';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +23,7 @@ export class ReportComponent {
 
        startDate: string = '';
        endDate: string = '';
+       numberAccount: string = '';
 
        
     
@@ -32,6 +33,19 @@ export class ReportComponent {
       };
       ngOnInit(): void {
         this.loadReport();
+
+        this.searchTerm$.pipe(
+              debounceTime(300),
+              distinctUntilChanged()
+              
+            ).subscribe(term => {
+              console.log('Search term:', term);
+              if(term.length == 0){
+                this.loadReport();
+              }
+              this.reports = [];
+              this.loadReport();
+            });
       }
 
     loadReportByDate(): void {
@@ -39,8 +53,14 @@ export class ReportComponent {
         alert("Por favor, selecciona un rango de fechas.");
         return;
       }
+      if (!this.numberAccount) {
+        alert("Por favor, ingrese un numero de cuenta.");
+        return;
+      }
 
-      this.movementService.fetchMovementsReport('683053', this.startDate, this.endDate, 'json').subscribe({
+      
+
+      this.movementService.fetchMovementsReport(this.numberAccount, this.startDate, this.endDate, 'json').subscribe({
         next: (response) => {
           console.log('Response received:', response); // Debug log
           this.reports = response.data;
@@ -56,6 +76,15 @@ export class ReportComponent {
         }
       });
     }
+
+    onSearch(event: Event): void {
+      const inputElement = event.target as HTMLInputElement;
+      if (inputElement) {
+        const term = inputElement.value.trim();
+        this.searchTerm$.next(term);
+      }
+    }
+  
 
       
     loadReport(): void {
@@ -84,7 +113,12 @@ export class ReportComponent {
         alert("Por favor, selecciona un rango de fechas.");
         return;
       }
-      this.movementService.fetchMovementsReport('683053', this.startDate, this.endDate, 'pdf')
+     
+      if (!this.numberAccount) {
+        alert("Por favor, ingrese un numero de cuenta.");
+        return;
+      }
+      this.movementService.fetchMovementsReport(this.numberAccount, this.startDate, this.endDate, 'pdf')
       .subscribe(base64String => {
         this.displayBase64PDF(base64String.data);
       }, error => {

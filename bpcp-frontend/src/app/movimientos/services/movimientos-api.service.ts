@@ -31,7 +31,6 @@ export class MovimientosApiService {
    }
 
      createMovement(movement: any): Observable<movementDTO> {
-      console.log("MOVEMENTService",movement)
        return this.http.post<movementDTO>(this.API_URL, movement).pipe(
          catchError(this.handleError)
        );
