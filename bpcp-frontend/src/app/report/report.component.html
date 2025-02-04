@@ -1,0 +1,77 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold">Reportes</h2>
+      <button 
+      class="btn btn-warning text-white" 
+      data-bs-toggle="modal" 
+      data-bs-target="#createMovementModal"
+      (click)="downloadReportPdf()"
+        
+      >
+      Descargar Reporte
+    </button>   
+ </div>
+
+   <!-- Date Range Selection -->
+   <div class="row mb-3">
+    <div class="col-md-2">
+        <label for="startDate" class="form-label">Fecha Inicio</label>
+        <input type="date" id="startDate" class="form-control" [(ngModel)]="startDate">
+    </div>
+    <div class="col-md-2">
+        <label for="endDate" class="form-label">Fecha Fin</label>
+        <input type="date" id="endDate" class="form-control" [(ngModel)]="endDate">
+    </div>
+    <div class="col-md-2">
+        <label for="endDate" class="form-label" style="display: block;">Realizar Consulta</label>
+        <button 
+        class="btn btn-warning text-white" 
+        data-bs-toggle="modal" 
+        (click)="loadReportByDate()" 
+        >
+        Consultar
+      </button>      
+    </div>
+
+   
+</div>
+  
+    <!-- Search Input -->
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Buscar">
+    </div>
+  
+    <!-- Table -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+         <th>Fecha</th>
+         <th>Cliente</th>
+          <th># Cuenta</th>
+          <th>Tipo Cuenta</th>
+          <th>Saldo Inicial</th>
+          <th>Status</th>
+          <th>Movimiento</th>
+          <th>Saldo Disponible</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reports">
+          <td>{{ report.movementAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+
+          <td>{{ report.name }}</td>
+          <td>{{ report.numberAccount }}</td>
+          <td>{{ report.typeAccount }}</td>
+          <td>{{ report.initialAmount }}</td>
+          <td>{{ report.status }}</td>
+          <td>{{ report.movementAmount }}</td>
+          <td>{{ report.totalAmount }}</td>
+        </tr>
+        <tr *ngIf="reports.length === 0">
+          <td colspan="8" class="text-center">No hay datos disponibles</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

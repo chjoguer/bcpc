@@ -1,0 +1,105 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Movimientos</h2>
+       
+    </div>
+
+
+
+    <div class="row g-3">
+        <div class="col-6">
+            <label for="identification" class="visually-hidden">Ingrese su consulta</label>
+            <input class="form-control" id="accountnumber" (input)="onSearch($event)"
+                placeholder="Ingrese su consulta" />
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#createMovementModal">
+                Nuevo
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th># Cuenta</th>
+                <th>Tipo Cuenta</th>
+                <th>Monto Inicial</th>
+                <th>Status</th>
+                <th>Movimiento</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movement of movements">
+                <td>{{ movement.numberAccount }}</td>
+                <td>{{ movement.typeMovement }}</td>
+                <td>{{ movement.initialAmount }}</td>
+                <td>{{ movement.status }}</td>
+                <td>{{ movement.movementAmount }}</td>
+
+
+                <td>
+                    <button class="btn btn-sm btn-primary">Editar</button>
+                    <!-- <button class="btn btn-sm btn-danger" (click)="deleteClient(cliente.identification)">Eliminar</button> -->
+
+                </td>
+            </tr>
+            <tr *ngIf="movements.length === 0">
+                <td colspan="5" class="text-center">No hay datos disponibles</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Create Client Modal -->
+<div class="modal fade" id="createMovementModal" #createMovementModal tabindex="-1" aria-labelledby="createMovmentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- You can use a form here; adjust the formControlNames as needed -->
+            <form [formGroup]="movementForm" (ngSubmit)="onSubmit()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createMovementModalLabel">Crear Nuevo Movimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="numberAccount" class="form-label"># Cuenta</label>
+                        <input type="text" id="numberAccount" class="form-control" formControlName="numberAccount"
+                            placeholder="Ingrese la cuenta">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="typeMovement" class="form-label">Tipo de Movimiento</label>
+                        <select id="typeMovement" class="form-select" formControlName="typeMovement">
+                            <option value="" selected>Seleccione...</option>
+                            <option value="DEPOSIT">Depósito</option>
+                            <option value="WITHDRAWAL">Retiro</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="movementAmount" class="form-label">Cantidad</label>
+                        <input type="text" id="movementAmount" class="form-control" formControlName="movementAmount"
+                            placeholder="Ingrese la cantidad">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="movementForm.invalid || loading">
+                        {{ loading ? 'Creando...' : 'Realizar Movimiento' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
