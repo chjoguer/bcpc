@@ -7,55 +7,68 @@
   <!-- Search Input -->
   <div class="row g-3">
     <div class="col-6">
-      <label for="identification" class="visually-hidden">Ingrese su consulta</label>
-      <input class="form-control" id="identification" (input)="onSearch($event)" placeholder="Ingrese su consulta" />
+      <label for="identification" class="visually-hidden"
+        >Ingrese su consulta</label
+      >
+      <input
+        class="form-control"
+        id="identification"
+        (input)="onSearch($event)"
+        placeholder="Ingrese su consulta"
+      />
     </div>
     <div class="col-3">
       <div class="d-flex justify-content-between align-items-center mb-4">
-
-      <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#createClientModal">
-        Nuevo
-      </button>
-    </div>
-
+        <button
+          class="btn btn-warning text-white"
+          data-bs-toggle="modal"
+          data-bs-target="#createClientModal"
+        >
+          Nuevo
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Table -->
-  <table class="table table-bordered mt-4">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Identificacion</th>
-        <th>Edad</th>
-        <th>Telefono</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cliente of clientes">
-        <td>{{ cliente.name }}</td>
-        <td>{{ cliente.identification }}</td>
-        <td>{{ cliente.age }}</td>
-        <td>{{ cliente.phone }}</td>
+  <app-table
+    [columns]="tableColumns"
+    [data]="tableData"
+    (deleteRow)="deleteRow($event)" 
+        (deleteRow)="deleteRow($event)" 
 
-        <td>
-          <button class="btn btn-sm btn-primary">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteClient(cliente.identification)">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="clientes.length === 0">
-        <td colspan="4" class="text-center">No hay datos disponibles</td>
-      </tr>
-    </tbody>
-  </table>
+    (closeModal)="closeModal()"
+    (openModal)="openModal($event)"
+  ></app-table>
+
+  <app-modal 
+  [title]="'Actualizar Cliente'" 
+  [isOpen]="isModalOpen" 
+  [fields]="customFields"
+  [data]="selectedRow" 
+  (closeModal)="closeModal()"
+  (openModal)="openModal($event)"
+  (submitForm)="onModalSubmit($event)">
+</app-modal>
+
+<app-modal 
+[title]="'Estas Seguro de Eliminar el Cliente'" 
+[isOpen]="isModalOpenAlert" 
+(closeModal)="closeModalAlert()"
+(openModalAlert)="openModalAlert($event)"
+(submitForm)="onModalSubmitAlert($event)">
+</app-modal>
+
+
 </div>
 
 <!-- Create Client Modal -->
-<div class="modal fade" id="createClientModal" tabindex="-1" aria-labelledby="createClientModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="createClientModal"
+  tabindex="-1"
+  aria-labelledby="createClientModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- You can use a form here; adjust the formControlNames as needed -->
@@ -64,51 +77,104 @@
           <h5 class="modal-title" id="createClientModalLabel">
             Crear Nuevo Cliente
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <!-- Name Field -->
           <div class="mb-3">
             <label for="name" class="form-label">Nombre</label>
-            <input type="text" id="name" class="form-control" formControlName="name" placeholder="Ingrese el nombre" />
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+              placeholder="Ingrese el nombre"
+            />
           </div>
           <!-- Identification Field -->
           <div class="mb-3">
-            <label for="identification" class="form-label">Identificación</label>
-            <input type="text" id="identification" class="form-control" formControlName="identification"
-              placeholder="Ingrese la identificación" />
+            <label for="identification" class="form-label"
+              >Identificación</label
+            >
+            <input
+              type="text"
+              id="identification"
+              class="form-control"
+              formControlName="identification"
+              placeholder="Ingrese la identificación"
+            />
           </div>
           <!-- Age Field -->
           <div class="mb-3">
             <label for="age" class="form-label">Edad</label>
-            <input type="number" id="age" class="form-control" formControlName="age" placeholder="Ingrese la edad" />
+            <input
+              type="number"
+              id="age"
+              class="form-control"
+              formControlName="age"
+              placeholder="Ingrese la edad"
+            />
           </div>
           <!-- Phone Field -->
           <div class="mb-3">
             <label for="phone" class="form-label">Teléfono</label>
-            <input type="text" id="phone" class="form-control" formControlName="phone"
-              placeholder="Ingrese el teléfono" />
+            <input
+              type="text"
+              id="phone"
+              class="form-control"
+              formControlName="phone"
+              placeholder="Ingrese el teléfono"
+            />
           </div>
           <div class="mb-3">
             <label for="gender" class="form-label">Genero</label>
-            <input type="text" id="gender" class="form-control" formControlName="gender"
-              placeholder="Ingrese su Genero" />
+            <input
+              type="text"
+              id="gender"
+              class="form-control"
+              formControlName="gender"
+              placeholder="Ingrese su Genero"
+            />
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Contrasenia</label>
-            <input type="text" id="password" class="form-control" formControlName="password"
-              placeholder="Ingrese Password" />
+            <input
+              type="text"
+              id="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Ingrese Password"
+            />
           </div>
           <div class="mb-3">
             <label for="status" class="form-label">Estado</label>
-            <input type="text" id="status" class="form-control" formControlName="status" placeholder="Estado" />
+            <input
+              type="text"
+              id="status"
+              class="form-control"
+              formControlName="status"
+              placeholder="Estado"
+            />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
             Cerrar
           </button>
-          <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid || loading">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="clientForm.invalid || loading"
+          >
             {{ loading ? "Creando..." : "Crear Cliente" }}
             <!-- {{ loading ? 'Creando...' : 'Crear Cliente' }} -->
           </button>

@@ -20,7 +20,10 @@ public class ClientDAOImpl implements IClientDAO {
     @Override
     @Transactional(readOnly = true)
     public List<Client> findClients() {
-        return this.em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
+        return this.em.createQuery(
+                        "SELECT c FROM Client c WHERE  c.status=:status", Client.class)
+                .setParameter("status", 1).getResultList();
+        // this.em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
     }
 
     @Override

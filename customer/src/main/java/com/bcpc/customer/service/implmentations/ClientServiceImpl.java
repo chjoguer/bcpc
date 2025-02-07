@@ -9,6 +9,8 @@ import com.bcpc.customer.service.interfaces.IPersonService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,12 @@ public class ClientServiceImpl implements IPersonService {
     private ClientRepository clientRepository;
     @Autowired
     private IClientDAO clientDAO;
+
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public ClientServiceImpl() {
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
 
     @Override
@@ -59,6 +67,7 @@ public class ClientServiceImpl implements IPersonService {
 
 
             TypeMap<ClientBankDTO, Client> typeMap = modelMapper.createTypeMap(ClientBankDTO.class, Client.class);
+
             typeMap.addMappings(mapper -> {
                 mapper.map(ClientBankDTO::getName, Client::setName);
                 mapper.map(ClientBankDTO::getAge, Client::setAge);
@@ -67,7 +76,7 @@ public class ClientServiceImpl implements IPersonService {
 
             Client newClient = modelMapper.map(clientBankDTO, Client.class);
             System.out.println("Mapped Client: " + newClient);
-
+            newClient.setPassword(this.cryptPassword(newClient.getPassword()));
             this.clientDAO.createClient(newClient);
             return clientBankDTO;
         }catch (Exception e){
@@ -91,6 +100,7 @@ public class ClientServiceImpl implements IPersonService {
             currentClient.setAge(person.getAge());
             currentClient.setPhone(person.getPhone());
             currentClient.setAddress(person.getAddress());
+            currentClient.setStatus(person.getStatus());
 
             this.clientDAO.updateClient(currentClient);
             return modelMapper.map(currentClient, ClientBankDTO.class);
@@ -108,25 +118,21 @@ public class ClientServiceImpl implements IPersonService {
 
         if (clientEntity.isPresent()) {
 
-//            this.clientDAO.deleteClient(clientEntity.get());
-
             ModelMapper modelMapper = new ModelMapper();
 
             Client currentClient = clientEntity.get();
-            currentClient.setStatus("INACTIVE");
-
+            currentClient.setStatus(0);
 
             this.clientDAO.updateClient(currentClient);
-            return modelMapper.map(currentClient, ClientBankDTO.class);
-            //return "Usuario ha sido eliminado " + identification;
 
+            return modelMapper.map(currentClient, ClientBankDTO.class);
         }else {
 
             return new ClientBankDTO();
         }
+    }
 
-
-
-
+    public String cryptPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }

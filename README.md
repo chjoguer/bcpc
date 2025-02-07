@@ -44,7 +44,7 @@ docker build . -t bcpc-image:1.0.0
 docker run -d  --name bcpc-frontend --network=bcpc -p 4200:4200 bcpc-image:1.0.0 
 
 ```
-
+ 
 ### Arquitectura de Microservicios Propuesta
 
 ![plot](./DiagramaArquitecturaMicroservicios.png)

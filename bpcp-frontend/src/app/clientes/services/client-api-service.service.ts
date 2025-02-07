@@ -21,7 +21,8 @@ export class ClientApiServiceService {
     
   // }
   getClients(search?: string): Observable<ClientDTO[]> {
-    if (search) {
+    if (search && search.length > 0) {
+      console.log("aqui eeeee",search)
       return this.http.get<ClientDTO[]>(`${this.API_URL}/${search}`).pipe(
         catchError(this.handleError)
       );    
@@ -44,7 +45,7 @@ export class ClientApiServiceService {
   // Create new client
   createClient(client: any): Observable<ClientDTO> {
     console.log("CLIENTService",client)
-    return this.http.post<ClientDTO>(this.API_URL+'/create', client).pipe(
+    return this.http.post<ClientDTO>(this.API_URL, client).pipe(
       catchError(this.handleError)
     );
   }

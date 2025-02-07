@@ -69,9 +69,14 @@ public class MovementController {
         return ResponseEntity.ok(this.movementService.createMovement(movementDTO));
     }
 
-    @PutMapping("/{identification}")
-    public ResponseEntity<MovementDTO> updateClient(@RequestBody MovementDTO movementDTO,@PathVariable String identification) {
-        return ResponseEntity.ok(this.movementService.updateMovement(movementDTO,identification));
+    @PutMapping("/{id_movement}")
+    public ResponseEntity<MovementDTO> updateMovement(@RequestBody MovementDTO movementDTO,@PathVariable Long id_movement) {
+        return ResponseEntity.ok(this.movementService.updateMovement(movementDTO,id_movement));
+    }
+
+    @DeleteMapping("/{id_movement}")
+    public ResponseEntity<MovementDTO> deleteMovementById(@PathVariable Long id_movement) {
+        return ResponseEntity.ok(this.movementService.deleteMovementById(id_movement));
     }
 
 

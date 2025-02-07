@@ -17,24 +17,29 @@ public class ControllerAccount {
     @Autowired
     private AccountServiceImpl accountService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<AccountDTO>> fetchAccount() {
         return ResponseEntity.ok(this.accountService.findAll());
     }
 
-    @GetMapping("/{identification}")
-    public ResponseEntity<Optional<AccountDTO>> fetchAccountByIdentification(@PathVariable("identification") String identification) {
-        return  ResponseEntity.ok(this.accountService.findAccountById(identification));
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity<Optional<AccountDTO>> fetchAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber) {
+        return  ResponseEntity.ok(this.accountService.fetchAccountByAccountNumber(accountNumber));
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO accountDTO) {
         return ResponseEntity.ok(this.accountService.createAccount(accountDTO));
     }
 
-    @PutMapping("/{identification}")
-    public ResponseEntity<AccountDTO> updateClient(@RequestBody AccountDTO accountDTO,@PathVariable String identification) {
-        return ResponseEntity.ok(this.accountService.updateAccount(accountDTO,identification));
+    @PutMapping("/{accountNumber}")
+    public ResponseEntity<AccountDTO> updateClient(@RequestBody AccountDTO accountDTO,@PathVariable String accountNumber) {
+        return ResponseEntity.ok(this.accountService.updateAccount(accountDTO,accountNumber));
+    }
+
+    @DeleteMapping("/{accountNumber}")
+    public ResponseEntity<AccountDTO> deleteAccountByNumberAccount(@PathVariable("accountNumber") String accountNumber) {
+        return  ResponseEntity.ok(this.accountService.deleteAccountByNumberAccount(accountNumber));
     }
 
 

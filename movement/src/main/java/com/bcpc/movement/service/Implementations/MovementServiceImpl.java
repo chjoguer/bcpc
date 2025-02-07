@@ -66,21 +66,44 @@ public class MovementServiceImpl implements IMovementService {
 
     public List<ReportDTO> findMovementByAccountAndDate(String accountNumber, LocalDate startDate, LocalDate endDate) {
         return this.movementRepository.findMovementByAccountAndDate(accountNumber, startDate, endDate);
-//        ModelMapper modelMapper = new ModelMapper();
-//
-//        return this.movementRepository.findMovementByAccountAndDate(accountNumber, startDate, endDate).stream()
-//                .map(entity -> modelMapper.map(entity, ReportDTO.class))
-//                .collect(Collectors.toList());
+
     }
 
     @Override
-    public MovementDTO updateMovement(MovementDTO movementDTO, String identification) {
-        return null;
+    public MovementDTO updateMovement(MovementDTO movementDTO, Long id_movement) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        Optional<Movement> cMovement = this.movementRepository.findById(id_movement);
+
+        if (cMovement.isPresent()) {
+            Movement currentAccount = cMovement.get();
+            currentAccount.setStatus(movementDTO.getStatus());
+            currentAccount.setInitialAmount(movementDTO.getInitialAmount());
+
+            this.movementRepository.save(currentAccount);
+            return modelMapper.map(currentAccount, MovementDTO.class);
+        }else{
+            return new MovementDTO();
+        }
     }
 
+
+
     @Override
-    public String deleteAccount(String identification) {
-        return "";
+    public MovementDTO deleteMovementById(Long id_movement) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        Optional<Movement> cMovement = this.movementRepository.findById(id_movement);
+
+        if (cMovement.isPresent()) {
+            Movement currentAccount = cMovement.get();
+            currentAccount.setStatus(0);
+
+            this.movementRepository.save(currentAccount);
+            return modelMapper.map(currentAccount, MovementDTO.class);
+        }else{
+            return new MovementDTO();
+        }
     }
 
     @Override

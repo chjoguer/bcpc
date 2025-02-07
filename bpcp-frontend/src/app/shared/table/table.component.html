@@ -1,0 +1,23 @@
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th *ngFor="let column of columns">{{ column.title }}</th>
+            <th *ngIf="columns.length < 8" >Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let row of data">
+            <td *ngFor="let column of columns">{{ row[column.key] }}</td>
+            <td *ngIf="columns.length < 8">
+                <button   (click)="onEdit(row)" class="btn btn-sm btn-primary">Editar</button>
+                <button  (click)="onDelete(row)" class="btn btn-sm btn-danger" >Eliminar</button>
+              </td>
+        </tr>
+        <tr *ngIf="data.length === 0">
+            <td colspan="8" class="text-center">No hay datos disponibles</td>
+        </tr>
+        
+    </tbody>
+</table>

@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface IAccountService {
 
     List<AccountDTO> findAll();
-    Optional<AccountDTO> findAccountById(String identification);
+    Optional<AccountDTO> fetchAccountByAccountNumber(String identification);
     AccountDTO createAccount(AccountDTO account);
     AccountDTO updateAccount(AccountDTO account,String identification);
-    String deleteAccount(String identification);
+    AccountDTO deleteAccountByNumberAccount(String identification);
 
 }

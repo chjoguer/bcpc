@@ -2,9 +2,14 @@ package com.bcpc.customer.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
-
+@Setter(AccessLevel.PUBLIC)
+@Getter(AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "client")
 public class Client extends Person {
 //        @Id
@@ -13,30 +18,10 @@ public class Client extends Person {
         @Column(name = "person_id")
         private String clientReference;
         private String password;
-        private String status;
+        private Integer status;
 
-        public String getClientReference() {
-                return clientReference;
-        }
 
-        public void setClientReference(String clientReference) {
-                this.clientReference = clientReference;
-        }
 
-        public String getPassword() {
-                return password;
-        }
 
-        public void setPassword(String password) {
-                this.password = password;
-        }
-
-        public String getStatus() {
-                return status;
-        }
-
-        public void setStatus(String status) {
-                this.status = status;
-        }
 }
 

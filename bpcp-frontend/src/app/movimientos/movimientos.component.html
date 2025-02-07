@@ -21,38 +21,27 @@
         </div>
     </div>
 
-    <!-- Table -->
-    <table class="table table-bordered mt-4">
-        <thead>
-            <tr>
-                <th># Cuenta</th>
-                <th>Tipo Cuenta</th>
-                <th>Monto Inicial</th>
-                <th>Status</th>
-                <th>Movimiento</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let movement of movements">
-                <td>{{ movement.numberAccount }}</td>
-                <td>{{ movement.typeMovement }}</td>
-                <td>{{ movement.initialAmount }}</td>
-                <td>{{ movement.status }}</td>
-                <td>{{ movement.movementAmount }}</td>
+    <app-table [columns]="tableColumns" 
+               [data]="tableData"
+               (deleteRow)="deleteRow($event)" 
+               (openModal)="openModal($event)">        
+    </app-table>
 
 
-                <!-- <td>
-                    <button class="btn btn-sm btn-primary">Editar</button>
-                    <!-- <button class="btn btn-sm btn-danger" (click)="deleteClient(cliente.identification)">Eliminar</button> -->
-                <!-- </td> --> 
-            </tr>
-            <tr *ngIf="movements.length === 0">
-                <td colspan="5" class="text-center">No hay datos disponibles</td>
-            </tr>
-        </tbody>
-    </table>
+   
 </div>
+
+<app-modal 
+  [title]="'Actualizar Movimiento'" 
+  [isOpen]="isModalOpen" 
+  [fields]="customFields"
+  [data]="selectedRow" 
+  (closeModal)="closeModal()"
+  (openModal)="openModal($event)"
+  (submitForm)="onModalSubmit($event)"
+
+  >
+</app-modal>
 
 
 

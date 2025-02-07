@@ -28,6 +28,12 @@ public class AccountService {
         return createdAccount;
     }
 
+
+    public Account deleteAccount(String num_account) {
+        Account updatedAccount = accountClient.deleteAccount(num_account);
+        return updatedAccount;
+    }
+
     public Account updateAccount(Account account,String num_account) {
         Account updatedAccount = accountClient.updateAccount(account,num_account);
         return updatedAccount;

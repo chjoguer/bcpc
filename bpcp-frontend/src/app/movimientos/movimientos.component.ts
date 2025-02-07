@@ -10,10 +10,12 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'; // If using ng
 import { movementDTO } from './dto/movementDTO';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { TableComponent } from '../shared/table/table.component';
+import { ModalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-movimientos',
-  imports: [CommonModule, ReactiveFormsModule,NgbModule], // Import CommonModule to use *ngIf, *ngFor, etc.
+  imports: [CommonModule, ReactiveFormsModule,TableComponent,NgbModule,ModalComponent], // Import CommonModule to use *ngIf, *ngFor, etc.
   templateUrl: './movimientos.component.html',
   styleUrl: './movimientos.component.css',
   providers: [MovimientosApiService],
@@ -29,6 +31,45 @@ export class MovimientosComponent {
   successMessage = '';
   submitted = false;
   errorMessage = '';
+
+  
+  tableColumns = [
+    { key: 'numberAccount', title: '# Cuenta' },
+    { key: 'typeMovement', title: 'Tipo Cuenta' },
+    { key: 'initialAmount', title: 'Saldo Inicial	' },
+    { key: 'status', title: 'Status' },
+    { key: 'movementAmount', title: 'Movimiento' },
+  ];
+
+  customFields = [
+    { id: 'numberAccount', label: '# Cuenta', type: 'text', value: '' },
+    { 
+      id: 'typeMovement', label: 'Tipo de Movimiento', type: 'select', value: '', 
+      options: [
+        { value: 'DEPOSIT', label: 'Depósito' },
+        { value: 'WITHDRAWAL', label: 'Retiro' }
+      ]
+    },
+    { id: 'typeMovement', label: 'Cantidad', type: 'number', value: null },
+
+    
+  ];
+
+  mappedCustomFields(customFields: any[],selectedRow:any): void {
+    customFields[0]['value'] = selectedRow.numberAccount;
+    customFields[1]['value'] = selectedRow.typeMovement;
+    customFields[2]['value'] = selectedRow.movementAmount;
+
+    this.customFields = customFields;
+    console.log('Selected mappedCustomFields:', customFields);
+
+  }
+
+
+
+
+  tableData: movementDTO[] = [];
+
 
   constructor(
     public movementService: MovimientosApiService,
@@ -139,6 +180,7 @@ export class MovimientosComponent {
       next: (response) => {
         console.log('Response received:', response); // Debug log
         this.movements = response;
+        this.tableData = response;
         this.loading = false;
       },
       error: (error) => {
@@ -153,27 +195,54 @@ export class MovimientosComponent {
   }
 
 
-  closeModal() {
-    const modalElement = document.getElementById('createMovementModal');
-    console.log('modalElement', modalElement);
+  // closeModal() {
+  //   const modalElement = document.getElementById('createMovementModal');
+  //   console.log('modalElement', modalElement);
     
-    if (modalElement) {
-      // Remove show classes
-      modalElement.classList.remove('show');
-      modalElement.classList.remove('in');
+  //   if (modalElement) {
+  //     // Remove show classes
+  //     modalElement.classList.remove('show');
+  //     modalElement.classList.remove('in');
       
-      // Set display to none
-      modalElement.style.display = 'none';
+  //     // Set display to none
+  //     modalElement.style.display = 'none';
       
-      // Remove modal backdrop
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        backdrop.remove();
-      }
+  //     // Remove modal backdrop
+  //     const backdrop = document.querySelector('.modal-backdrop');
+  //     if (backdrop) {
+  //       backdrop.remove();
+  //     }
       
-      // Remove body classes added by Bootstrap modal
-      document.body.classList.remove('modal-open');
-    }
+  //     // Remove body classes added by Bootstrap modal
+  //     document.body.classList.remove('modal-open');
+  //   }
+  // }
+
+  isModalOpen = false;
+  selectedRow: any = null;
+
+ 
+
+  openModal(row: any) {
+    console.log('Opening modal with dataxxxx:', row); 
+    this.selectedRow = row;
+    this.isModalOpen = true;
+    this.mappedCustomFields(this.customFields,this.selectedRow);
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedRow = null;
+  }
+
+  deleteRow(row: any) {
+    console.log('Deleting ROW dataxxxx:', row); 
+    // this.tableData = this.tableData.filter(row => row.id !== id);
+  }
+
+  onModalSubmit(fields: any) {
+    console.log('Submitted Fields:', fields);
+    this.isModalOpen = false;
   }
   
 }

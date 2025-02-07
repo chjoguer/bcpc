@@ -12,6 +12,7 @@
       Descargar Reporte
     </button>   
  </div>
+ 
 
    <!-- Date Range Selection -->
    <div class="row mb-3">
@@ -47,39 +48,8 @@
     </div>
 
     
+    <app-table [columns]="tableColumns" [data]="tableData"></app-table>
 
-    
   
-    <!-- Table -->
-    <table class="table table-bordered mt-4">
-      <thead>
-        <tr>
-         <th>Fecha</th>
-         <th>Cliente</th>
-          <th># Cuenta</th>
-          <th>Tipo Cuenta</th>
-          <th>Saldo Inicial</th>
-          <th>Status</th>
-          <th>Movimiento</th>
-          <th>Saldo Disponible</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let report of reports">
-          <td>{{ report.movementAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-
-          <td>{{ report.name }}</td>
-          <td>{{ report.numberAccount }}</td>
-          <td>{{ report.typeAccount }}</td>
-          <td>{{ report.initialAmount }}</td>
-          <td>{{ report.status }}</td>
-          <td>{{ report.movementAmount }}</td>
-          <td>{{ report.totalAmount }}</td>
-        </tr>
-        <tr *ngIf="reports.length === 0">
-          <td colspan="8" class="text-center">No hay datos disponibles</td>
-        </tr>
-      </tbody>
-    </table>
+  
   </div>

@@ -24,14 +24,14 @@ public class AccountServiceImpl implements IAccountService {
     public List<AccountDTO> findAll() {
         ModelMapper modelMapper = new ModelMapper();
 
-        return this.accountRepository.findAll()
+        return this.accountRepository.findAllAccount()
                 .stream()
                 .map(entity -> modelMapper.map(entity, AccountDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<AccountDTO> findAccountById(String number_account) {
+    public Optional<AccountDTO> fetchAccountByAccountNumber(String number_account) {
         ModelMapper modelMapper = new ModelMapper();
 
         return this.accountRepository.findBynumberAccount(number_account).stream()
@@ -79,8 +79,18 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public String deleteAccount(String identification) {
-        return "";
+    public AccountDTO deleteAccountByNumberAccount(String number_account) {
+        ModelMapper modelMapper = new ModelMapper();
+        Optional<Account> cAccount = this.accountRepository.findBynumberAccount(number_account);
+
+        if (cAccount.isPresent()) {
+            Account currentAccount = cAccount.get();
+            currentAccount.setStatus(0);
+            this.accountRepository.save(currentAccount);
+            return modelMapper.map(currentAccount, AccountDTO.class);
+        }else{
+            return new AccountDTO();
+        }
     }
 
 

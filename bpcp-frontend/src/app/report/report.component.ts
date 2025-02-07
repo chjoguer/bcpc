@@ -4,10 +4,11 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { reportDTO } from './dto/reportDTO';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TableComponent } from '../shared/table/table.component';
 
 @Component({
   selector: 'app-report',
-  imports: [CommonModule,FormsModule],  // Import CommonModule to use *ngIf, *ngFor, etc.
+  imports: [CommonModule,FormsModule,TableComponent],  // Import CommonModule to use *ngIf, *ngFor, etc.
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
 })
@@ -24,6 +25,20 @@ export class ReportComponent {
        startDate: string = '';
        endDate: string = '';
        numberAccount: string = '';
+
+       tableColumns = [
+        { key: 'movementAt', title: 'Fecha' },
+        { key: 'name', title: 'Cliente' },
+        { key: 'numberAccount', title: '# Cuenta' },
+        { key: 'typeAccount', title: 'Tipo Cuenta	' },
+        { key: 'initialAmount', title: 'Saldo Inicial	' },
+        { key: 'status', title: 'Status' },
+        { key: 'movementAmount', title: 'Movimiento' },
+        { key: 'totalAmount', title: 'Saldo Disponible' },
+      ];
+
+    
+      tableData = [];
 
        
     
@@ -64,6 +79,8 @@ export class ReportComponent {
         next: (response) => {
           console.log('Response received:', response); // Debug log
           this.reports = response.data;
+          this.tableData = response.data;
+
           this.loading = false;
         },
         error: (error) => {

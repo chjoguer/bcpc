@@ -40,5 +40,13 @@ public class MovementController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMovement);
     }
 
+    @DeleteMapping("/{movement_id}")
+    public ResponseEntity<Optional<Movement>> deleteMovementId(@PathVariable("movement_id") Long movement_id) {
+        System.out.println(movement_id);
+        Optional<Movement> movement = this.movementService.deleteMovementById(movement_id);
+        return ResponseEntity.status(HttpStatus.OK).body(movement);
+    }
+
+
 
 }

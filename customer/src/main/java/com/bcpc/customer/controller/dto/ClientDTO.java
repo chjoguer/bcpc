@@ -2,8 +2,7 @@ package com.bcpc.customer.controller.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

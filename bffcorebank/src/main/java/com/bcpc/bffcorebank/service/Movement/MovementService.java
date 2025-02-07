@@ -69,6 +69,10 @@ public class MovementService {
 
     }
 
+    public Optional<Movement> deleteMovementById(Long movementId) {
+        return this.movementClient.deleteMovement(movementId);
+    }
+
 
 
 

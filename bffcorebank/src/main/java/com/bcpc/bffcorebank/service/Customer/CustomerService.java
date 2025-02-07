@@ -49,8 +49,18 @@ public class CustomerService {
         return this.customerClient.fetchCustomers();
     }
 
+    public Customer updateCustomerByIdentification(String identification,Customer customer) {
+        return customerClient.updateCustomer(identification,customer);
+    }
+
     public Customer getCustomersByIdentification(String identification) {
         return this.customerClient.fetchClientByIdentification(identification);
+    }
+
+
+
+    public Customer deleteCustomer(String identification) {
+        return this.customerClient.deleteCustomer(identification);
     }
 
     public static String generateSixDigitAccountNumber() {

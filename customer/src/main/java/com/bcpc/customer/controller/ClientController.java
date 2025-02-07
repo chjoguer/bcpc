@@ -16,19 +16,13 @@ public class ClientController {
     @Autowired
     private ClientServiceImpl clientService;
 
-    @PostMapping
-    public ResponseEntity<ClientBankDTO> createClient(@RequestBody ClientBankDTO client) {
-        return ResponseEntity.ok(this.clientService.createClient(client));
-    }
+
     @PostMapping("/create")
     public ResponseEntity<ClientBankDTO> createClientBank(@RequestBody ClientBankDTO clientDTO) {
         return ResponseEntity.ok(this.clientService.createClient(clientDTO));
     }
 
-    @PutMapping("/{identification}")
-    public ResponseEntity<ClientBankDTO> updateClient(@RequestBody ClientBankDTO clientDTO,@PathVariable String identification) {
-        return ResponseEntity.ok(this.clientService.updateClient(clientDTO,identification));
-    }
+
 
     @GetMapping
     public ResponseEntity<List<ClientBankDTO>> fetchClients() {
@@ -40,11 +34,20 @@ public class ClientController {
         return  ResponseEntity.ok(this.clientService.findById(identification));
     }
 
+    @PostMapping()
+    public ResponseEntity<ClientBankDTO> createClient(@RequestBody ClientBankDTO client) {
+        return ResponseEntity.ok(this.clientService.createClient(client));
+    }
+
+    @PutMapping("/{identification}")
+    public ResponseEntity<ClientBankDTO> updateClient(@RequestBody ClientBankDTO clientDTO,@PathVariable String identification) {
+        return ResponseEntity.ok(this.clientService.updateClient(clientDTO,identification));
+    }
+
     @DeleteMapping("{identification}")
     public ResponseEntity<ClientBankDTO> deleteClientByIdentification(@PathVariable("identification") String identification) {
         return  ResponseEntity.ok(this.clientService.deleteClient(identification));
     }
 
 
-    // Add more endpoints for update, delete, find
 }

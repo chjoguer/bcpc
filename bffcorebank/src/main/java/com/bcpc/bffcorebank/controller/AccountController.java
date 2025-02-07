@@ -36,11 +36,19 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAccount);
     }
 
-    @PostMapping("/{num_account}")
+    @PutMapping("/{num_account}")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account,@PathVariable("num_account") String num_account) {
         Account createdAccount = this.accountService.updateAccount(account,num_account);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAccount);
     }
+
+    @DeleteMapping("/{num_account}")
+    public ResponseEntity<Account> deleteAccount(@PathVariable("num_account") String num_account) {
+        Account createdAccount = this.accountService.deleteAccount(num_account);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAccount);
+    }
+
+
 
 
 
