@@ -33,11 +33,9 @@
   <app-table
     [columns]="tableColumns"
     [data]="tableData"
-    (deleteRow)="deleteRow($event)" 
-        (deleteRow)="deleteRow($event)" 
-
     (closeModal)="closeModal()"
     (openModal)="openModal($event)"
+    (deleteRow)="deleteRow($event)" 
   ></app-table>
 
   <app-modal 
@@ -54,7 +52,9 @@
 [title]="'Estas Seguro de Eliminar el Cliente'" 
 [isOpen]="isModalOpenAlert" 
 (closeModal)="closeModalAlert()"
-(openModalAlert)="openModalAlert($event)"
+[fields]="customFields"
+[data]="selectedRow" 
+(openModalAlert)="deleteRow($event)"
 (submitForm)="onModalSubmitAlert($event)">
 </app-modal>
 
@@ -159,6 +159,7 @@
               class="form-control"
               formControlName="status"
               placeholder="Estado"
+              value="1"
             />
           </div>
         </div>

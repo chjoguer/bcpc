@@ -108,10 +108,11 @@ export class ReportComponent {
       this.loading = true;
       this.error = '';
   
-      this.movementService.fetchMovementsReport('683053', '2025-02-01', '2025-02-03', 'json').subscribe({
+      this.movementService.fetchMovementsReport().subscribe({
         next: (response) => {
-          console.log('Response received:', response); // Debug log
+          console.log('Response received33333:', response); 
           this.reports = response.data;
+          this.tableData = response.data;
           this.loading = false;
         },
         error: (error) => {
@@ -126,21 +127,29 @@ export class ReportComponent {
     }
 
     downloadReportPdf(): void {
-      if (!this.startDate || !this.endDate) {
-        alert("Por favor, selecciona un rango de fechas.");
+      console.log('Response Generated PDF:',this.startDate,this.endDate,this.numberAccount);   
+      console.log('Response Generated PDF:',(!this.startDate && !this.endDate && !this.numberAccount));
+      if (!this.startDate && !this.endDate && !this.numberAccount) {
+        console.log('Response Generated PDF:',this.startDate,this.endDate,this.numberAccount);   
+
+        this.movementService.fetchMovementsReport(this.numberAccount, this.startDate, this.endDate, 'pdf')
+        .subscribe(base64String => {
+          this.displayBase64PDF(base64String.data);
+        }, error => {
+          console.error("Error fetching PDF:", error);
+        });
         return;
+      }else{
+        this.movementService.fetchMovementsReport(this.numberAccount, this.startDate, this.endDate, 'pdf')
+        .subscribe(base64String => {
+          this.displayBase64PDF(base64String.data);
+        }, error => {
+          console.error("Error fetching PDF:", error);
+        });
       }
      
-      if (!this.numberAccount) {
-        alert("Por favor, ingrese un numero de cuenta.");
-        return;
-      }
-      this.movementService.fetchMovementsReport(this.numberAccount, this.startDate, this.endDate, 'pdf')
-      .subscribe(base64String => {
-        this.displayBase64PDF(base64String.data);
-      }, error => {
-        console.error("Error fetching PDF:", error);
-      });
+      
+     
 
 
     }

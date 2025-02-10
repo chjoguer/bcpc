@@ -16,6 +16,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.IOException;
 import java.util.Base64 ;
 
 import java.time.LocalDate;
@@ -55,14 +57,33 @@ public class MovementController {
                 String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
 
                 return CustomResponse.success(base64Pdf);
-            } catch (DocumentException e) {
+            } catch (DocumentException | IOException e) {
                 return ResponseEntity.status(500).body("Error generating PDF: " + e.getMessage());
             }
         }
         return CustomResponse.success(reportData);
     }
 
+    @GetMapping("/report")
+    public ResponseEntity<?> fetchMovementByAccountAndDate(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(value = "exportType", required = false) String exportType)  {
 
+        List<ReportDTO> reportData = this.movementService.findMovementsByDate(startDate, endDate);
+
+        if ("pdf".equalsIgnoreCase(exportType)) {
+            try {
+                byte[] pdfBytes = this.movementService.generateReportPdf(reportData);
+                String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
+
+                return CustomResponse.success(base64Pdf);
+            } catch (DocumentException | IOException e) {
+                return ResponseEntity.status(500).body("Error generating PDF: " + e.getMessage());
+            }
+        }
+        return CustomResponse.success(reportData);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<MovementDTO> createMovement(@RequestBody MovementDTO movementDTO) {

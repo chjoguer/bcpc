@@ -13,7 +13,6 @@ export interface ClientDTO {
     updateAt?: Date;
   }
   
-  // Optional: Create a DTO for creating/updating clients
   export interface CreateClientDTO {
     name: string;
     apellido: string;

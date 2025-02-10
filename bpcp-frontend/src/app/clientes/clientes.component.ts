@@ -226,8 +226,13 @@ export class ClientesComponent implements OnInit {
 
   isModalOpenAlert=false;
   openModalAlert(row: any){
-    console.log('Opening deleting with dataxxxx:', row); 
+    console.log('Opening deleting with dataxxxx:', row);
+    this.selectedRow = row;
     this.isModalOpenAlert = true;
+    console.log('Opening modal with dataxxxx222:', this.selectedRow,this.customFields); 
+
+    this.mappedCustomFields(this.customFields,this.selectedRow);
+
   }
   closeModalAlert() {
     this.isModalOpenAlert = false;
@@ -242,9 +247,9 @@ export class ClientesComponent implements OnInit {
  
 
   openModal(row: any) {
-    console.log('Opening modal with dataxxxx:', row); 
     this.selectedRow = row;
     this.isModalOpen = true;
+
     this.mappedCustomFields(this.customFields,this.selectedRow);
   }
 
@@ -255,13 +260,26 @@ export class ClientesComponent implements OnInit {
 
   deleteRow(row: any) {
     console.log('Deleting row:', row);
-    console.log('Opening deleting with dataxxxx:', row); 
+    console.log('Opening deleting with dataxxxx333:', row); 
     this.isModalOpenAlert = true;
+    this.selectedRow = row;
+
+    console.log('Opening modal with dataxxxx222:', this.selectedRow,this.customFields); 
+
+    this.mappedCustomFields(this.customFields,this.selectedRow);
   }
 
   onModalSubmitAlert(fields: any) {
     console.log('Submitted Alerts:', fields);
-
+    this.clientService.deleteClient(fields['identification']).subscribe({
+      next: () => {
+        this.loadClients();
+      },
+      error: (err) => {
+        console.error('Error deleting client:', err);
+        alert('Ocurrió un error al eliminar el cliente');
+      }
+    });
   }
 
 

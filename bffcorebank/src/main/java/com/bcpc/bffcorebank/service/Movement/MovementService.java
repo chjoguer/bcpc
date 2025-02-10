@@ -69,6 +69,13 @@ public class MovementService {
 
     }
 
+
+    public Movement updateMovementById(Long movement_id,Movement movement) {
+       return this.movementClient.updateMovement(movement,movement_id);
+
+    }
+
+
     public Optional<Movement> deleteMovementById(Long movementId) {
         return this.movementClient.deleteMovement(movementId);
     }

@@ -1,5 +1,6 @@
 package com.bcpc.movement.service.Implementations;
 
+import com.bcpc.movement.bean.PdfUtils;
 import com.bcpc.movement.controller.dto.MovementDTO;
 import com.bcpc.movement.controller.dto.ReportDTO;
 import com.bcpc.movement.domain.Movement;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +33,13 @@ public class MovementServiceImpl implements IMovementService {
     public List<MovementDTO> findAll() {
         ModelMapper modelMapper = new ModelMapper();
 
-        return this.movementRepository.findAll()
+        return this.movementRepository.findAllMovements()
                 .stream()
                 .map(entity -> modelMapper.map(entity, MovementDTO.class))
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<MovementDTO> findMovmentByAccountNumber(String number_account) {
@@ -66,8 +70,14 @@ public class MovementServiceImpl implements IMovementService {
 
     public List<ReportDTO> findMovementByAccountAndDate(String accountNumber, LocalDate startDate, LocalDate endDate) {
         return this.movementRepository.findMovementByAccountAndDate(accountNumber, startDate, endDate);
-
     }
+
+    @Override
+    public List<ReportDTO> findMovementsByDate(LocalDate startDate, LocalDate endDate) {
+        return this.movementRepository.findMovementsByDate(startDate, endDate);
+    }
+
+
 
     @Override
     public MovementDTO updateMovement(MovementDTO movementDTO, Long id_movement) {
@@ -107,33 +117,8 @@ public class MovementServiceImpl implements IMovementService {
     }
 
     @Override
-    public byte[] generateReportPdf(List<ReportDTO> reports) throws DocumentException {
-        Document document = new Document();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    public byte[] generateReportPdf(List<ReportDTO> reports) throws DocumentException, IOException {
+        return PdfUtils.generateReportPdf(reports);
 
-        PdfWriter.getInstance(document, baos);
-        document.open();
-
-        document.add(new Paragraph("Movement Report"));
-        document.add(new Paragraph(" ")); // Empty line
-
-        // Iterate over each report item and add details to the PDF.
-        for (ReportDTO report : reports) {
-            // Format your report content as needed.
-            String reportLine = String.format("Date: %s, Name: %s, Account: %s, Type: %s, Status: %s, " +
-                            "Initial Amount: %s, Movement Amount: %s, Total: %s",
-                    report.getMovementAt(),
-                    report.getName(),
-                    report.getNumberAccount(),
-                    report.getTypeAccount(),
-                    report.getStatus(),
-                    report.getInitialAmount(),
-                    report.getMovementAmount(),
-                    report.getTotalAmount());
-            document.add(new Paragraph(reportLine));
-        }
-
-        document.close();
-        return baos.toByteArray();
     }
 }

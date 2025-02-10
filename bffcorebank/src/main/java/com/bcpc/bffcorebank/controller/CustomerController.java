@@ -49,7 +49,7 @@ public class CustomerController {
     @DeleteMapping("/{identification}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("identification") String identification) {
         Customer createdCustomer = this.customerService.deleteCustomer(identification);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(createdCustomer);
     }
 
 

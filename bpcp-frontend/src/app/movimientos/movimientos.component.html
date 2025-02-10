@@ -43,6 +43,16 @@
   >
 </app-modal>
 
+<app-modal 
+[title]="'Estas Seguro de Eliminar el Cliente'" 
+[isOpen]="isModalOpenAlert" 
+(closeModal)="closeModalAlert()"
+[fields]="customFields"
+[data]="selectedRow" 
+(openModalAlert)="deleteRow($event)"
+(submitForm)="onModalSubmitAlert($event)">
+</app-modal>
+
 
 
 <!-- Create Client Modal -->

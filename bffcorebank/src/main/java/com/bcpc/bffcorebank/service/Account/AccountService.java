@@ -1,12 +1,8 @@
 package com.bcpc.bffcorebank.service.Account;
 import com.bcpc.bffcorebank.domain.Account;
-import com.bcpc.bffcorebank.domain.Customer;
-import com.bcpc.bffcorebank.service.Customer.ICustomerClient;
+import com.bcpc.bffcorebank.service.FacadeCore.FacadeCoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +13,8 @@ public class AccountService {
 
     @Autowired
     private  IAccountClient accountClient;
+    @Autowired
+    private FacadeCoreService facadeCoreLogic;
 
     @Autowired
     public AccountService(IAccountClient accountClient) {
@@ -24,8 +22,8 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
-        Account createdAccount = accountClient.createAccount(account);
-        return createdAccount;
+        Account acc = this.facadeCoreLogic.processCreateAccount(account);
+        return accountClient.createAccount(acc);
     }
 
 

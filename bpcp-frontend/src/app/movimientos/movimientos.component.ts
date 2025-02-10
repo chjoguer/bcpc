@@ -42,6 +42,7 @@ export class MovimientosComponent {
   ];
 
   customFields = [
+    { id: 'id', label: 'Moviemiento ID', type: 'number', value: null },
     { id: 'numberAccount', label: '# Cuenta', type: 'text', value: '' },
     { 
       id: 'typeMovement', label: 'Tipo de Movimiento', type: 'select', value: '', 
@@ -50,18 +51,23 @@ export class MovimientosComponent {
         { value: 'WITHDRAWAL', label: 'Retiro' }
       ]
     },
-    { id: 'typeMovement', label: 'Cantidad', type: 'number', value: null },
+    { id: 'movementAmount', label: 'Cantidad', type: 'number', value: null },
+    { id: 'status', label: 'Status', type: 'number', value: null },
+    { id: 'initialAmount', label: 'Cantidad Inicial', type: 'number', value: null },
 
     
   ];
 
   mappedCustomFields(customFields: any[],selectedRow:any): void {
-    customFields[0]['value'] = selectedRow.numberAccount;
-    customFields[1]['value'] = selectedRow.typeMovement;
-    customFields[2]['value'] = selectedRow.movementAmount;
+    customFields[0]['value'] = selectedRow.id;
+    customFields[1]['value'] = selectedRow.numberAccount;
+    customFields[2]['value'] = selectedRow.typeMovement;
+    customFields[3]['value'] = selectedRow.movementAmount;
+    customFields[4]['value'] = selectedRow.status;
+    customFields[5]['value'] = selectedRow.initialAmount;
 
     this.customFields = customFields;
-    console.log('Selected mappedCustomFields:', customFields);
+    console.log('Selected mappedCustomFields......:', customFields);
 
   }
 
@@ -237,12 +243,57 @@ export class MovimientosComponent {
 
   deleteRow(row: any) {
     console.log('Deleting ROW dataxxxx:', row); 
+    this.isModalOpenAlert = true;
+    this.selectedRow = row;
+
+    console.log('Opening modal with movement:', this.selectedRow,this.customFields); 
+
+    this.mappedCustomFields(this.customFields,this.selectedRow);
     // this.tableData = this.tableData.filter(row => row.id !== id);
   }
 
   onModalSubmit(fields: any) {
+    console.log('Submitted Fields:', fields['id']);
     console.log('Submitted Fields:', fields);
+
+    this.movementService.updateMovement(fields['id'],fields).subscribe({
+      next: (response) => {
+        console.log('Response received:', response); // Debug log
+        this.loadMovements();
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching movements:', error);
+        this.error = 'Error loading movements. Please try again later.';
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
     this.isModalOpen = false;
   }
+
+  isModalOpenAlert=false;
+
+
+  onModalSubmitAlert(fields: any) {
+    console.log('Submitted Alerts:', fields);
+    this.movementService.deleteMovement(fields['id']).subscribe({
+      next: () => {
+        this.loadMovements();
+      },
+      error: (err) => {
+        console.error('Error deleting movements:', err);
+        alert('Ocurrió un error al eliminar el movimiento');
+      }
+    });
+  }
+
+  closeModalAlert() {
+    this.isModalOpenAlert = false;
+    this.selectedRow = null;
+  }
+
   
 }

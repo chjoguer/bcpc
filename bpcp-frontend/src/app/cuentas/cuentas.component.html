@@ -20,7 +20,7 @@
       <button
         class="btn btn-warning text-white"
         data-bs-toggle="modal"
-        data-bs-target="#createClientModal"
+        data-bs-target="#createAccountModal"
       >
         Nuevo
       </button>
@@ -32,6 +32,7 @@
     [data]="tableData"
     (closeModal)="closeModal()"
     (openModal)="openModal($event)"
+    (deleteRow)="deleteRow($event)"
   ></app-table>
 
   <app-modal
@@ -40,12 +41,86 @@
     [fields]="customFields"
     [data]="selectedRow"
     (closeModal)="closeModal()"
-    (openModalAlert)="openModal($event)"
+    (openModal)="openModal($event)"
     (submitForm)="onModalSubmit($event)"
   >
   </app-modal>
 
- 
+  <app-modal
+    [title]="'Estas Seguro de Eliminar el Cliente'"
+    [isOpen]="isModalOpenAlert"
+    (closeModal)="closeModalAlert()"
+    [fields]="customFields"
+    [data]="selectedRow"
+    (openModalAlert)="deleteRow($event)"
+    (submitForm)="onModalSubmitAlert($event)"
+  >
+  </app-modal>
 </div>
 
-<!-- Create Client Modal -->
+<div
+  class="modal fade"
+  id="createAccountModal"
+  tabindex="-1"
+  aria-labelledby="createAccountModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- You can use a form here; adjust the formControlNames as needed -->
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()"  >
+        <div class="modal-header">
+          <h5 class="modal-title" id="createAccountModalLabel">
+            Crear Nueva Cuenta
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="identification" class="form-label"
+              >Identificación</label
+            >
+            <input
+              type="text"
+              id="identification"
+              class="form-control"
+              formControlName="identification"
+              placeholder="Ingrese la identificación"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="typeAccount" class="form-label">Tipo de Cuenta</label>
+            <select id="typeAccount" class="form-select" formControlName="typeAccount">
+                <option value="" selected>Seleccione...</option>
+                <option value="1">Ahorro Plus</option>
+                <option value="2">Corriente</option>
+            </select>
+        </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]=" loading"
+          >
+            {{ loading ? "Creando..." : "Crear Cuetna" }}
+            <!-- {{ loading ? 'Creando...' : 'Crear Cliente' }} -->
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

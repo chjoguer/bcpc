@@ -4,6 +4,8 @@ import com.bcpc.customer.controller.dto.ClientBankDTO;
 import com.bcpc.customer.controller.dto.ClientDTO;
 import com.bcpc.customer.service.implmentations.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +48,7 @@ public class ClientController {
 
     @DeleteMapping("{identification}")
     public ResponseEntity<ClientBankDTO> deleteClientByIdentification(@PathVariable("identification") String identification) {
-        return  ResponseEntity.ok(this.clientService.deleteClient(identification));
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(this.clientService.deleteClient(identification));
     }
 
 

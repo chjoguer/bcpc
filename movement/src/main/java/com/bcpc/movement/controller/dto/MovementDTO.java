@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovementDTO {
+    private Long id;
     private String numberAccount;
 //    private Date movementAt;
     private String typeMovement;

@@ -39,6 +39,11 @@ public class MovementController {
         Movement createdMovement = this.movementService.createMovement(movement);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMovement);
     }
+    @PutMapping("/{movement_id}")
+    public ResponseEntity<Movement> updateMovement(@PathVariable("movement_id") Long movement_id,@RequestBody Movement movement) {
+        Movement updatedMovement = this.movementService.updateMovementById(movement_id,movement);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedMovement);
+    }
 
     @DeleteMapping("/{movement_id}")
     public ResponseEntity<Optional<Movement>> deleteMovementId(@PathVariable("movement_id") Long movement_id) {
@@ -46,6 +51,8 @@ public class MovementController {
         Optional<Movement> movement = this.movementService.deleteMovementById(movement_id);
         return ResponseEntity.status(HttpStatus.OK).body(movement);
     }
+
+
 
 
 

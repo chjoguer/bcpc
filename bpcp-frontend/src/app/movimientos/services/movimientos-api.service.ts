@@ -17,10 +17,10 @@ export class MovimientosApiService {
  
    
  
-   getMovements(accountNumber?: string): Observable<movementDTO[]> {
+   getMovements(accountNumber?: string): Observable<any[]> {
      let params = new HttpParams();
      if (accountNumber) {
-       return this.http.get<movementDTO[]>(`${this.API_URL}/${accountNumber}`,).pipe(
+       return this.http.get<any[]>(`${this.API_URL}/${accountNumber}`,).pipe(
         catchError(this.handleError)
       );
      }
@@ -37,11 +37,22 @@ export class MovimientosApiService {
      }
 
      fetchMovementsReport(
-      accountNumber: string, 
-      startDate: string, 
-      endDate: string, 
+      accountNumber?: string, 
+      startDate?: string, 
+      endDate?: string, 
       exportType: string = 'json'
     ): Observable<any> {
+
+      if (!accountNumber || !startDate || !endDate) {
+        // console.log('Missing parameters',new Date())
+        let params = new HttpParams()
+        .set('startDate', "2025-02-01")
+        .set('endDate', "2025-02-19")
+        .set('exportType', exportType); // "base64" or "json"
+  
+      return this.http.get<any>(`${this.API_URL_REPORT}/report`, { params }).pipe(
+        catchError(this.handleError));
+      }
       let params = new HttpParams()
         .set('startDate', startDate)
         .set('endDate', endDate)
@@ -51,6 +62,18 @@ export class MovimientosApiService {
         catchError(this.handleError)
       );
     }
+
+      updateMovement(id: number, movement: any): Observable<any> {
+        return this.http.put<any>(`${this.API_URL}/${id}`, movement).pipe(
+          catchError(this.handleError)
+        );
+      }
+    
+      deleteMovement(id: any): Observable<void> {
+        return this.http.delete<void>(`${this.API_URL}/${id}`).pipe(
+          catchError(this.handleError)
+        );
+      }
  
    
  

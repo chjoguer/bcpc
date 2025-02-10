@@ -4,6 +4,7 @@ package com.bcpc.bffcorebank.service.Customer;
 import com.bcpc.bffcorebank.domain.Account;
 import com.bcpc.bffcorebank.domain.Customer;
 import com.bcpc.bffcorebank.service.Account.IAccountClient;
+import com.bcpc.bffcorebank.service.FacadeCore.FacadeCoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class CustomerService {
 
     private final ICustomerClient customerClient;
     private final IAccountClient accountClient;
+    @Autowired
+    private FacadeCoreService facadeCoreLogic;
 
     @Autowired
     public CustomerService(ICustomerClient customerClient, IAccountClient accountClient) {
@@ -28,16 +31,14 @@ public class CustomerService {
 
     public Customer createCustomer(Customer customer) {
         Customer createdCustomer = customerClient.createCustomer(customer);
-        String accountNumber = generateSixDigitAccountNumber();
-        String defaultAccount = "Ahorro";
 
         Account account = new Account();
-        account.setNumberAccount(accountNumber);
         account.setIdentification(customer.getIdentification());
-        account.setTypeAccount(defaultAccount);
-        account.setInitialAmount(0.0);
-        account.setStatus(1);
-        accountClient.createAccount(account);
+        account.setTypeAccount("0");
+
+        Account acc = this.facadeCoreLogic.processCreateAccount(account);
+
+        accountClient.createAccount(acc);
 
         return createdCustomer;
     }

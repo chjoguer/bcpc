@@ -31,7 +31,7 @@ export class CuentasApiService {
   }
 
   createAccount(client: any): Observable<accountDTO> {
-    return this.http.post<accountDTO>(this.API_URL+'/create', client).pipe(
+    return this.http.post<accountDTO>(this.API_URL, client).pipe(
       catchError(this.handleError)
     );
   }
